@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native';
 
+import { colors } from '../../globalStyles';
+
 const HomeStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
@@ -14,6 +16,9 @@ const HomeStyles = StyleSheet.create({
   stories: {
     width: '100%',
     height: '15%',
+    borderColor: colors.GREY,
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
   },
   feed: {
     width: '100%',
