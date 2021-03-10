@@ -1,3 +1,12 @@
+import React from 'react';
+import { SafeAreaView } from 'react-native';
+
 import HomePage from './src/pages/Home';
 
-export default HomePage;
+const App = () => (
+  <SafeAreaView>
+    <HomePage />
+  </SafeAreaView>
+);
+
+export default App;
