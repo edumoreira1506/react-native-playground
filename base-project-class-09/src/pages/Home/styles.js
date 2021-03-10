@@ -4,14 +4,15 @@ const homeStyles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingTop: 50,
+    paddingTop: 30,
   },
   gamesCategoryList: {
     width: '90%',
     height: '100%',
   },
-  category: {
+  game: {
     width: '100%',
+    marginBottom: 4
   }
 });
 
