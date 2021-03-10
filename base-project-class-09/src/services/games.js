@@ -10,7 +10,7 @@ const templateGame = ({ title, platform, metacritic }, index) => ({
 const templateCategory = ({ data, category }, index) => ({
   name: category,
   key: `${category}-${index}`,
-  games: data.map(templateGame)
+  data: data.map(templateGame)
 })
 
 export const getGamesCategory = () => GAMES_CATEGORY_LIST.map(templateCategory);

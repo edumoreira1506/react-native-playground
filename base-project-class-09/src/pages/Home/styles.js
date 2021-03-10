@@ -10,8 +10,9 @@ const homeStyles = StyleSheet.create({
     width: '90%',
     height: '100%',
   },
-  category: {
+  game: {
     width: '100%',
+    marginBottom: 4
   }
 });
 
