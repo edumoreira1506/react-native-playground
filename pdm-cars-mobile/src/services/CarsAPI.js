@@ -14,6 +14,9 @@ const CarsAPI = axios.create({
 
 const getCars = () => CarsAPI.get('/cars');
 
+const create = car => CarsAPI.post('/cars', car);
+
 export default {
   getCars,
+  create,
 }
