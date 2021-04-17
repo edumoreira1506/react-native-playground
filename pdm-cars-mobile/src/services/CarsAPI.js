@@ -20,9 +20,12 @@ const update = (car, carId) => CarsAPI.patch(`/cars/${carId}`, car);
 
 const remove = carId => CarsAPI.delete(`/cars/${carId}`);
 
+const show = carId => CarsAPI.get(`/cars/${carId}`);
+
 export default {
   getCars,
   create,
   update,
   remove,
+  show,
 }

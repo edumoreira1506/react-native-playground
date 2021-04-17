@@ -54,14 +54,19 @@ export default function HomePage() {
 
   const handleDeleteCar = () => CarsAPI.remove(selectedCar.id).then(findCars);
 
+  const handleEditCar = () => CarsAPI.show(selectedCar.id).then(({ data }) => setFormCar(data));
+
   const handleSelectActionSheetOption = index => {
     switch (index) {
       case 1:
-        setFormCar(selectedCar);
+        handleEditCar();
+        break;
       case 2:
         handleDeleteCar();
+        break;
       default:
         setSelectedCar(null);
+        break;
     }
   }
 
