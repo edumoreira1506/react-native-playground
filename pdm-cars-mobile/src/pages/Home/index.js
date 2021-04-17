@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, ScrollView, StatusBar } from 'react-native';
+import { View, ScrollView, StatusBar, TouchableOpacity } from 'react-native';
+import ActionSheet from 'react-native-actionsheet'
 
 import CarsAPI from '../../services/CarsAPI';
 import CarDetails from '../../components/CarDetails';
@@ -16,6 +17,8 @@ const EMPTY_CAR = {
 export default function HomePage() {
   const [cars, setCars] = useState([]);
   const [formCar, setFormCar] = useState(EMPTY_CAR);
+  const [actionSheet, setActionSheet] = useState(null);
+  const [selectedCar, setSelectedCar] = useState(null);
 
   const findCars = () => CarsAPI.getCars().then(({ data }) => setCars(data));
 
@@ -23,29 +26,63 @@ export default function HomePage() {
     findCars();
   }, []);
 
-  const handleSaveCar = () => CarsAPI.create(formCar).then(() => {
-    setFormCar(EMPTY_CAR);
-    findCars();
-  });
+  const handleSaveCarForm = () => {
+    const isEditing = Boolean(formCar.id);
+
+    if (isEditing) {
+      CarsAPI.update(formCar, formCar.id).then(() => {
+        setFormCar(EMPTY_CAR);
+        findCars();
+      });
+    } else {
+      CarsAPI.create(formCar).then(() => {
+        setFormCar(EMPTY_CAR);
+        findCars();
+      });
+    }
+  }
 
   const handleChangeFormCar = (key, value) => setFormCar(prevFormCar => ({
     ...prevFormCar,
     [key]: value
   }));
 
+  const handleClickOnCar = car => {
+    setSelectedCar(car);
+    actionSheet?.show?.();
+  }
+
+  const handleDeleteCar = () => CarsAPI.remove(selectedCar.id).then(findCars);
+
+  const handleSelectActionSheetOption = index => {
+    switch (index) {
+      case 1:
+        setFormCar(selectedCar);
+      case 2:
+        handleDeleteCar();
+      default:
+        setSelectedCar(null);
+    }
+  }
+
   return (
     <View>
       <StatusBar />
       <View style={styles.form}>
-        <CarForm {...formCar} onSubmit={handleSaveCar} onChangeField={handleChangeFormCar} />
+        <CarForm {...formCar} onSubmit={handleSaveCarForm} onChangeField={handleChangeFormCar} />
       </View>
       <ScrollView style={styles.carsList}>
         {cars.map((car) => (
-          <View style={styles.car} key={car.id}>
+          <TouchableOpacity onPress={() => handleClickOnCar(car)} style={styles.car} key={car.id}>
             <CarDetails {...car} />
-          </View>
+          </TouchableOpacity>
         ))}
       </ScrollView>
+      <ActionSheet
+        ref={setActionSheet}
+        options={['Cancelar', 'Editar', 'Deletar']}
+        onPress={handleSelectActionSheetOption}
+      />
     </View>
   )
 }

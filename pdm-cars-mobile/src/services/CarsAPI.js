@@ -16,7 +16,13 @@ const getCars = () => CarsAPI.get('/cars');
 
 const create = car => CarsAPI.post('/cars', car);
 
+const update = (car, carId) => CarsAPI.patch(`/cars/${carId}`, car);
+
+const remove = carId => CarsAPI.delete(`/cars/${carId}`);
+
 export default {
   getCars,
   create,
+  update,
+  remove,
 }
